@@ -1,0 +1,18 @@
+<div id="<%%= dom_id <%= singular_table_name %> %>" class="hover:bg-gray-50">
+  <div class="px-6 py-4">
+    <div class="grid grid-cols-<%= attributes.size < 5 ? attributes.size + 1 : 6 %> gap-4">
+<% attributes.take(5).each do |attribute| -%>
+      <div class="text-sm font-medium text-gray-900 truncate">
+        <%%= <%= singular_table_name %>.<%= attribute.column_name %> %>
+      </div>
+<% end -%>
+      <div class="text-right text-sm">
+        <div class="flex justify-end space-x-2">
+          <%%= link_to "View", <%= singular_table_name %>, class: "text-indigo-600 hover:text-indigo-900" %>
+          <%%= link_to "Edit", edit_<%= singular_route_name %>_path(<%= singular_table_name %>), class: "text-indigo-600 hover:text-indigo-900" %>
+          <%%= link_to "Delete", <%= singular_table_name %>, data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "text-red-600 hover:text-red-900" %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

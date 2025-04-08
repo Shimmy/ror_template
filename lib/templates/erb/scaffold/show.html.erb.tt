@@ -1,0 +1,144 @@
+<%% content_for :title, "<%= human_name.downcase %>" %>
+<div class="max-w-3xl mx-auto">
+  <%% if notice.present? %>
+    <div class="p-4 mb-6 rounded-md bg-green-50 border border-green-200">
+      <div class="flex">
+        <div class="flex-shrink-0">
+          <!-- Success icon -->
+          <svg class="h-5 w-5 text-green-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+          </svg>
+        </div>
+        <div class="ml-3">
+          <p class="text-sm font-medium text-green-800"><%%= notice %></p>
+        </div>
+      </div>
+    </div>
+  <%% end %>
+  <div class="bg-white p-6 shadow-md rounded-lg">
+    <div class="flex justify-between mb-6">
+      <h1 class="text-2xl font-bold text-gray-800"><%= singular_table_name.titleize %> Details</h1>
+      <div class="flex space-x-2">
+        <%%= link_to "Edit", edit_<%= singular_route_name %>_path(@<%= singular_table_name %>), class: "px-3 py-1 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" %>
+        <%%= link_to "Back", <%= index_helper %>_path, class: "px-3 py-1 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" %>
+      </div>
+    </div>
+    <div class="space-y-4">
+    <% attributes.each do |attribute| -%>
+      <div class="border-b border-gray-200 pb-4">
+        <dt class="text-sm font-medium text-gray-500"><%= attribute.human_name %></dt>
+          <dd class="mt-1 text-sm text-gray-900">
+        <% if attribute.attachment? -%>
+          <%% if @<%= singular_table_name %>.<%= attribute.name %>.image? %>
+            <%%= image_tag(@<%= singular_table_name %>.<%= attribute.name %>.variant(:thumb)) rescue image_tag(@<%= singular_table_name %>.<%= attribute.name %>) %>
+          <%% else %>
+            <%%= link_to 'Download', url_for(@<%= singular_table_name %>.<%= attribute.name %>) if @<%= singular_table_name %>.<%= attribute.name %>.attached? %>
+          <%% end %>
+        <% elsif attribute.reference? -%>
+            <%% if @<%= singular_table_name %>.<%= attribute.name %>.present? %>
+              <%%=link_to @<%= singular_table_name %>.<%= attribute.name %>.public_send(display_method_for(<%= attribute.name.camelize %>)), @<%= singular_table_name %>.<%= attribute.name %> %>              
+            <%% else %>
+              None
+            <%% end %>
+          </dd>
+        <% else -%>                  
+          <dd class="mt-1 text-sm text-gray-900"><%%= @<%= singular_table_name %>.<%= attribute.column_name %> %></dd>
+        <% end -%>
+      </div>
+    <% end -%>
+    </div>
+    
+    <!-- Has Many Associations -->
+    <%% has_many_associations = <%= singular_table_name.camelize %>.reflect_on_all_associations(:has_many) %>
+    <%% if has_many_associations.any? %>
+      <div class="mt-8 space-y-8">
+        <h2 class="text-xl font-semibold text-gray-800 border-b pb-2">Related Records</h2>
+        
+        <%% has_many_associations.each do |association| %>
+          <div class="mt-6">
+            <div class="flex items-center justify-between mb-4">
+              <h3 class="text-lg font-medium text-gray-800"><%%= association.name.to_s.titleize %></h3>
+              <%% if respond_to?("#{association.name}_path") %>
+                <%%= link_to "View All", send("#{association.name}_path"), class: "text-sm text-indigo-600 hover:text-indigo-900" %>
+              <%% end %>
+            </div>
+            
+            <%% records = @<%= singular_table_name %>.send(association.name).limit(5) %>
+            
+            <%% if records.any? %>
+              <%% association_variable_name = association.name %>
+              <%% association_class = association.klass %>
+              
+              <%# Try to render the index partial for this association %>
+              <%% begin %>
+                <%% partial_path = "#{association.name}/#{association.name}" %>
+                <%% if lookup_context.template_exists?(partial_path, [], true) %>
+                  <%%= render partial: partial_path, locals: { <%= "association.name.to_sym" %> => records, :parent => @<%= singular_table_name %> } %>
+                <%% else %>
+                  <%# Fallback to a simple table %>
+                  <div class="mt-2 overflow-hidden border border-gray-200 rounded-lg">
+                    <table class="min-w-full divide-y divide-gray-200">
+                      <thead class="bg-gray-50">
+                        <tr>
+                          <%% columns = association_class.column_names.reject { |c| c.end_with?('_id') || c == 'id' || c.end_with?('_at') }.take(3) %>
+                          <%% columns = ['id'] if columns.empty? %>
+                          
+                          <%% columns.each do |column| %>
+                            <th scope="col" class="px-4 py-3 text-xs font-medium text-left text-gray-500 uppercase"><%%= column.humanize %></th>
+                          <%% end %>
+                          <th scope="col" class="relative px-4 py-3">
+                            <span class="sr-only">Actions</span>
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody class="bg-white divide-y divide-gray-200">
+                        <%% records.each do |record| %>
+                          <tr class="hover:bg-gray-50">
+                            <%% columns.each do |column| %>
+                              <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-900">
+                                <%%= record.send(column) %>
+                              </td>
+                            <%% end %>
+                            <td class="px-4 py-3 text-right text-sm font-medium whitespace-nowrap">
+                              <%% model_path = "#{record.model_name.singular_route_key}_path" %>
+                              <%% if respond_to?(model_path) %>
+                                <%%= link_to "View", send(model_path, record), class: "text-indigo-600 hover:text-indigo-900" %>
+                              <%% end %>
+                            </td>
+                          </tr>
+                        <%% end %>
+                      </tbody>
+                    </table>
+                  </div>
+                <%% end %>
+              <%% rescue => e %>
+                <%# If there's an error, fall back to basic display %>
+                <div class="p-4 bg-gray-50 rounded-md">
+                  <p class="text-sm text-gray-700"><%%= records.count %> records</p>
+                </div>
+              <%% end %>
+              
+              <%% total = @<%= singular_table_name %>.send(association.name).count %>
+              <%% if total > 5 && respond_to?("#{association.name}_path") %>
+                <div class="mt-2 text-right">
+                  <p class="text-sm text-gray-700">
+                    Showing 5 of <%%= total %> records
+                    <%%= link_to "View All", send("#{association.name}_path"), class: "ml-2 text-indigo-600 hover:text-indigo-900" %>
+                  </p>
+                </div>
+              <%% end %>
+            <%% else %>
+              <div class="mt-2 p-4 bg-gray-50 rounded-md text-sm text-gray-700">
+                No <%%= association.name.to_s.humanize.downcase %> found.
+              </div>
+            <%% end %>
+          </div>
+        <%% end %>
+      </div>
+    <%% end %>
+    
+    <div class="mt-8">
+      <%%= button_to "Delete this <%= singular_table_name %>", @<%= singular_table_name %>, method: :delete, class: "px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500", form: { data: { turbo_confirm: "Are you sure?" } } %>
+    </div>
+  </div>
+</div>
