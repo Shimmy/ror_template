@@ -122,7 +122,18 @@
           </div>
         </div>
         <!-- Main Content Area -->
-        <%= yield %>
+        <main class="relative flex-1 overflow-y-auto focus:outline-none">
+          <div class="py-6">
+            <!-- Page Header -->
+            <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
+              <h1 class="text-2xl font-semibold text-gray-900"><%= yield :title%></h1>
+            </div>
+            <!-- Dashboard Content -->
+            <div class="px-4 mx-auto max-w-7xl sm:px-6 md:px-8">
+              <%= yield %>
+            </div>
+          </div>
+        </main>
       </div>
     </div>
   </body>
