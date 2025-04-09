@@ -6,9 +6,19 @@ source_path = File.expand_path(File.dirname(__FILE__))
 FileUtils.mkdir_p("lib/templates/erb/scaffold")
 FileUtils.cp_r "#{source_path}/lib/templates/erb/scaffold/.", "lib/templates/erb/scaffold"
 
+FileUtils.mkdir_p("app/models/concerns")
+FileUtils.cp_r "#{source_path}/app/models/concerns/.", "app/models/concerns"
+
+FileUtils.mkdir_p("app/helpers")
+FileUtils.cp_r "#{source_path}/app/helpers/.", "app/helpers"
+
 # Copy layouts
 FileUtils.mkdir_p("app/views/layouts")
 FileUtils.cp_r "#{source_path}/app/views/layouts/.", "app/views/layouts"
+
+# Custom generator
+FileUtils.mkdir_p("lib/generators/scaffold_with_associations")
+FileUtils.cp_r "#{source_path}/lib/generators/scaffold_with_associations/.", "lib/generators/scaffold_with_associations"
 
 # Add gems
 gem "image_processing", ">= 1.2"
@@ -16,7 +26,7 @@ gem "image_processing", ">= 1.2"
 after_bundle do
   generate "authentication"
   rails_command "active_storage:install"
-  generate "scaffold foobar name:string"
+  generate "scaffold_with_associations document name:string description:text user:references"
   rails_command "db:migrate"
 
   # Seed user

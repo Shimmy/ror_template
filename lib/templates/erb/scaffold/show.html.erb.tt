@@ -36,7 +36,7 @@
           <%% end %>
         <% elsif attribute.reference? -%>
             <%% if @<%= singular_table_name %>.<%= attribute.name %>.present? %>
-              <%%=link_to @<%= singular_table_name %>.<%= attribute.name %>.public_send(display_method_for(<%= attribute.name.camelize %>)), @<%= singular_table_name %>.<%= attribute.name %> %>              
+              <%%=link_to(@<%= singular_table_name %>.<%= attribute.name %>.public_send(display_method_for(<%= attribute.name.camelize %>)), @<%= singular_table_name %>.<%= attribute.name %>) rescue @<%= singular_table_name %>.<%= attribute.name %>.public_send(display_method_for(<%= attribute.name.camelize %>))%>              
             <%% else %>
               None
             <%% end %>
@@ -63,60 +63,23 @@
               <%% end %>
             </div>
             
-            <%% records = @<%= singular_table_name %>.send(association.name).limit(5) %>
+            <%% records = @<%= singular_table_name %>.send(association.name) %>
             
             <%% if records.any? %>
               <%% association_variable_name = association.name %>
               <%% association_class = association.klass %>
-              
-              <%# Try to render the index partial for this association %>
-              <%% begin %>
-                <%% partial_path = "#{association.name}/#{association.name}" %>
-                <%% if lookup_context.template_exists?(partial_path, [], true) %>
-                  <%%= render partial: partial_path, locals: { <%= "association.name.to_sym" %> => records, :parent => @<%= singular_table_name %> } %>
-                <%% else %>
-                  <%# Fallback to a simple table %>
-                  <div class="mt-2 overflow-hidden border border-gray-200 rounded-lg">
-                    <table class="min-w-full divide-y divide-gray-200">
-                      <thead class="bg-gray-50">
-                        <tr>
-                          <%% columns = association_class.column_names.reject { |c| c.end_with?('_id') || c == 'id' || c.end_with?('_at') }.take(3) %>
-                          <%% columns = ['id'] if columns.empty? %>
-                          
-                          <%% columns.each do |column| %>
-                            <th scope="col" class="px-4 py-3 text-xs font-medium text-left text-gray-500 uppercase"><%%= column.humanize %></th>
-                          <%% end %>
-                          <th scope="col" class="relative px-4 py-3">
-                            <span class="sr-only">Actions</span>
-                          </th>
-                        </tr>
-                      </thead>
-                      <tbody class="bg-white divide-y divide-gray-200">
-                        <%% records.each do |record| %>
-                          <tr class="hover:bg-gray-50">
-                            <%% columns.each do |column| %>
-                              <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-900">
-                                <%%= record.send(column) %>
-                              </td>
-                            <%% end %>
-                            <td class="px-4 py-3 text-right text-sm font-medium whitespace-nowrap">
-                              <%% model_path = "#{record.model_name.singular_route_key}_path" %>
-                              <%% if respond_to?(model_path) %>
-                                <%%= link_to "View", send(model_path, record), class: "text-indigo-600 hover:text-indigo-900" %>
-                              <%% end %>
-                            </td>
-                          </tr>
-                        <%% end %>
-                      </tbody>
-                    </table>
-                  </div>
-                <%% end %>
-              <%% rescue => e %>
-                <%# If there's an error, fall back to basic display %>
-                <div class="p-4 bg-gray-50 rounded-md">
-                  <p class="text-sm text-gray-700"><%%= records.count %> records</p>
-                </div>
-              <%% end %>
+              <%% partial_path = "#{association.name}/#{association.name}" %>
+              <%% object = "@#{association.name}" %>
+              <table class="min-w-full divide-y divide-gray-200">
+                <thead class="bg-gray-50">
+                  <%%= render partial: "#{association.name.to_s}/#{association.klass.model_name.element}", collection: records.limit(1), locals: { headers: true } %>     
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200" id="<%= plural_table_name %>">
+                  <%%= render records %>
+                </tbody>
+              </table>
+
+
               
               <%% total = @<%= singular_table_name %>.send(association.name).count %>
               <%% if total > 5 && respond_to?("#{association.name}_path") %>
