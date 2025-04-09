@@ -1,0 +1,53 @@
+Rules for Rails App Development
+
+Project Context
+* This is a Ruby on Rails application.
+* Your base directory is the root of the Rails app.
+
+Scaffolding
+* Use the custom generator: rails generate scaffold_with_associations.
+* It automatically adds has_many in the associated model when using references.
+* Prefer this generator over the default.
+* When generating scaffolds, use references where applicable. If unsure, ask the user.
+* Do not remove or alter existing functionality unless explicitly told.
+
+Routing
+* Use restful routing with resources
+* nest resources when applicable, for example
+  resources :blogs do
+    resources :ratings
+  end
+
+JavaScript (Stimulus)
+* Use Stimulus for all frontend interactions.
+* Do not add inline JavaScript in HTML.
+* Place controllers in app/javascript/controllers/
+* Name files like: [controller_name_plural]_controller.js.
+
+Stylesheets (Tailwind)
+* All views have tailwind css loaded
+* Always use tailwind, don't create inline css.
+* Try to keep the same layout and style as existing views.
+
+Conventions & Principles
+* Stick to Rails conventions unless user instructs otherwise.
+* Avoid over-engineering.
+* When modifying or adding code, preserve all existing functionality unless told to refactor.
+
+Preinstalled components
+* Rails Authenticator is installed
+* Current.user and Current.user.id to get the current user
+* authenticated? to check if user is authenticated
+* User model is the preinstalled user model, you can not modify it.
+
+Common Commands
+* rails generate scaffold_with_associations
+* rails db:migrate
+* rails db:rollback
+
+Troubleshooting
+* When user says something went wrong please check the rails development log
+* located in log/development.log
+* you probably should not read the whole log since it can be really big
+* tail -n50 log/development.log shoud be sufficient if you dont know what you are looking for
+* You can also grep the log
