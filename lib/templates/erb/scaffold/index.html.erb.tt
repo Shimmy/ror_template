@@ -5,7 +5,7 @@
 </div>
 
 <div class="overflow-hidden bg-white shadow sm:rounded-lg">
-  <table class="min-w-full divide-y divide-gray-200">
+<table class="min-w-full divide-y divide-gray-200" id="<%= plural_table_name %>-datatable" data-source="<%%= <%= plural_table_name %>_path(format: :json) %>">
     <thead class="bg-gray-50">
       <%%= render partial: "<%= singular_table_name %>", collection: @<%= plural_table_name %>.limit(1), locals:{headers: true} %>      
     </thead>
