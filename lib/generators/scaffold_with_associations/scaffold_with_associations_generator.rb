@@ -1,10 +1,10 @@
 require 'rails/generators/rails/scaffold/scaffold_generator'
 
 class ScaffoldWithAssociationsGenerator < Rails::Generators::ScaffoldGenerator
-  source_root File.expand_path('templates', __dir__)
+  source_root File.expand_path('templates/erb/scaffold2', __dir__)
 
   class_option :skip_associations, type: :boolean, default: false, desc: "Skip generating associations"
-
+  class_option :
   def handle_associations
     return if options[:skip_associations]
 
@@ -13,6 +13,10 @@ class ScaffoldWithAssociationsGenerator < Rails::Generators::ScaffoldGenerator
         add_has_many_association(attribute)
       end
     end
+  end
+
+  def create_datatable_file
+    template 'datatable.rb.tt', File.join('app/datatables', "#{file_name}_datatable.rb")
   end
 
   private
@@ -29,4 +33,5 @@ class ScaffoldWithAssociationsGenerator < Rails::Generators::ScaffoldGenerator
       say_status("warning", "Model file #{model_file} not found. Skipping has_many association.", :yellow)
     end
   end
+
 end

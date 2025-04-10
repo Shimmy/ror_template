@@ -1,0 +1,23 @@
+class <%= class_name %>Datatable < AjaxDatatablesRails::ActiveRecord
+  def view_columns
+    @view_columns ||= {
+      <% attributes.each do |attribute| %>
+        <%= attribute.name %>: { source: "<%= class_name %>.<%= attribute.name %>" },
+      <% end %>
+    }
+  end
+
+  def data
+    records.map do |record|
+      {
+        <% attributes.each do |attribute| %>
+          <%= attribute.name %>: record.<%= attribute.name %>,
+        <% end %>
+      }
+    end
+  end
+
+  def get_raw_records
+    <%= class_name %>.all
+  end
+end
