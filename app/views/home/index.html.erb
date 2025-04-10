@@ -1,1 +1,105 @@
-welcome
+<div class="min-h-screen w-full bg-gradient-to-br from-indigo-900 via-purple-900/70 to-cyan-700 relative flex flex-col justify-between overflow-x-hidden">
+  <!-- HERO -->
+  <header class="py-20 px-4 max-w-4xl mx-auto flex flex-col items-center animate-fadein">
+    <h1 class="gradient-text text-6xl md:text-7xl font-extrabold text-center drop-shadow-2xl animate-pop">Level Up Your Productivity</h1>
+    <p class="mt-7 text-gray-50 text-lg md:text-2xl max-w-2xl text-center animate-fadein-slow">Unlock the ultimate modern workflow with <span class="font-bold text-cyan-200">NextGen Rails Suite</span>.<br> Ship projects faster—effortlessly.</p>
+    <div class="mt-10 flex gap-6 animate-fadein-extra" data-controller="flash-button">
+      <a 
+        data-flash-button-target="button"
+        data-action="mouseenter->flash-button#hoverOn mouseleave->flash-button#hoverOff focus->flash-button#hoverOn blur->flash-button#hoverOff"
+        href="#signup" 
+        class="get-started-btn px-8 py-4 rounded-full bg-gradient-to-tr from-indigo-600 via-purple-500 to-cyan-400 text-white text-xl font-bold shadow-2xl hover:from-cyan-400 hover:to-indigo-600 transition border-2 border-white/20 backdrop-blur focus:outline-none"
+      >Get Started</a>
+      <a href="#features" class="px-8 py-4 rounded-full bg-white/10 text-cyan-50 text-xl font-bold border border-cyan-100/20 shadow-lg hover:bg-cyan-50/20 transition backdrop-blur">See Features</a>
+    </div>
+  </header>
+
+  <!-- FEATURES -->
+  <section id="features" class="py-16 px-4 max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12">
+    <div class="glass group p-8 flex flex-col items-center text-center shadow-xl border border-white/20 bg-white/10 rounded-2xl transition-all duration-300 hover:scale-105 hover:border-cyan-300/80 hover:bg-cyan-600/10 hover:shadow-2xl hover:-translate-y-2">
+      <div class="rounded-full bg-cyan-300/40 p-5 mb-5 shadow group-hover:bg-cyan-400/70 transition-all duration-300">
+        <svg class="w-10 h-10 text-cyan-900 group-hover:text-cyan-600 transition-colors duration-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 4v16m8-8H4"></path></svg>
+      </div>
+      <h3 class="text-xl font-bold mb-2 text-cyan-100 group-hover:text-cyan-400 transition-colors duration-300">Instant Scaffolding</h3>
+      <p class="text-gray-100 group-hover:text-cyan-100 transition">Generate beautiful, production-ready CRUD faster than ever with a single command.</p>
+    </div>
+    <div class="glass group p-8 flex flex-col items-center text-center shadow-xl border border-white/20 bg-white/10 rounded-2xl transition-all duration-300 hover:scale-105 hover:border-indigo-300/80 hover:bg-indigo-600/10 hover:shadow-2xl hover:-translate-y-2">
+      <div class="rounded-full bg-indigo-300/40 p-5 mb-5 shadow group-hover:bg-indigo-400/70 transition-all duration-300">
+        <svg class="w-10 h-10 text-indigo-900 group-hover:text-indigo-600 transition-colors duration-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M14.31 8l5.74 9.94M9.69 8h11.48M7.38 12l5.74-9.94M9.69 16L3.95 6.06"/></svg>
+      </div>
+      <h3 class="text-xl font-bold mb-2 text-indigo-100 group-hover:text-indigo-400 transition-colors duration-300">Seamless Auth & Roles</h3>
+      <p class="text-gray-100 group-hover:text-indigo-100 transition">Authentication, roles, and permissions—all included. Just hook up your user model.</p>
+    </div>
+    <div class="glass group p-8 flex flex-col items-center text-center shadow-xl border border-white/20 bg-white/10 rounded-2xl transition-all duration-300 hover:scale-105 hover:border-yellow-100/80 hover:bg-yellow-300/10 hover:shadow-2xl hover:-translate-y-2">
+      <div class="rounded-full bg-yellow-200/40 p-5 mb-5 shadow group-hover:bg-yellow-200/90 transition-all duration-300">
+        <svg class="w-10 h-10 text-yellow-900 group-hover:text-yellow-600 transition-colors duration-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+      </div>
+      <h3 class="text-xl font-bold mb-2 text-yellow-100 group-hover:text-yellow-300 transition-colors duration-300">Tailwind & Stimulus Built-In</h3>
+      <p class="text-gray-100 group-hover:text-yellow-50 transition">Enjoy stunning UI and powerful frontend interactions with zero configuration.</p>
+    </div>
+  </section>
+
+  <!-- VISUAL PREVIEW -->
+  <section class="py-16 px-4 max-w-4xl mx-auto flex flex-col md:flex-row items-center gap-12">
+    <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=600&q=80" class="rounded-3xl shadow-2xl w-full md:w-1/2 max-h-96 object-cover border-4 border-white/30 animate-fadein">
+    <div class="md:w-1/2">
+      <h2 class="gradient-text text-4xl font-extrabold mb-4 animate-pop">See It In Action</h2>
+      <p class="text-gray-100 mb-6 animate-fadein">Effortlessly scaffold resources, manage users, and deploy modern Rails apps without friction.</p>
+      <ul class="list-disc ml-7 text-lg text-cyan-100">
+        <li>Modern dashboard out of the box</li>
+        <li>Scalable and composable architecture</li>
+        <li>Beautiful, maintainable code</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- FAQ / CTA -->
+  <footer class="py-20 px-4 max-w-3xl mx-auto text-center flex flex-col gap-8">
+    <h2 class="gradient-text text-3xl font-bold animate-pop">Ready To Build Faster?</h2>
+    <p class="text-gray-300 mb-4">Join our growing community and experience the future of Rails productivity.</p>
+    <a href="#signup" class="inline-block px-10 py-5 text-2xl bg-gradient-to-r from-indigo-700 via-cyan-500 to-pink-400 text-white rounded-full shadow-2xl hover:from-pink-400 hover:to-indigo-700 transition border-2 border-white/20 backdrop-blur">Sign Up Free</a>
+    <div class="mt-10 text-gray-400 text-xs">&copy; 2025 NextGen Rails Suite. No animals were harmed building this page.</div>
+  </footer>
+
+  <style>
+    .gradient-text {
+      background: linear-gradient(to right, #fff 40%, #7dd3fc, #818cf8 70%, #d8b4fe 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+              background-clip: text;
+              color: transparent;
+    }
+    .flashing-glow {
+      box-shadow: 0 0 0 0 #fff0, 0 0 48px 10px #8be9fdcc, 0 0 78px 20px #a78bfa68, 0 0 92px 30px #f472b6cc;
+      background-image: radial-gradient(circle at 50% 60%, #a5f3fc90 0%, #818cf880 60%, transparent 100%);
+      filter: drop-shadow(0 0 12px #38bdf899) brightness(1.07);
+      transition: box-shadow .6s cubic-bezier(.4,.4,.84,1), filter .5s, background .5s;
+    }
+
+    @keyframes fadein {
+      to {opacity: 1}
+    }
+    .animate-fadein {
+      opacity: 0;
+      animation: fadein .9s ease forwards;
+    }
+    .animate-fadein-slow {
+      opacity: 0;
+      animation: fadein 1.3s .4s ease forwards;
+    }
+    .animate-fadein-extra {
+      opacity: 0;
+      animation: fadein 2s .8s ease forwards;
+    }
+    @keyframes pop {
+      0% {transform: scale(.7); opacity: 0;}
+      70% {transform: scale(1.05); opacity: .92;}
+      100% {transform: scale(1); opacity: 1;}
+    }
+    .animate-pop {animation: pop 0.7s cubic-bezier(.23,1.12,.62,.96) both;}
+    .glass {
+      background: rgba(255,255,255,0.14);
+      backdrop-filter: blur(12px) brightness(1.04);
+    }
+  </style>
+</div>

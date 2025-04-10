@@ -1,0 +1,124 @@
+# How to Get Tailwind CSS Working in This Rails App
+
+This writeup matches your current (working) project setup and will help you quickly replicate the working CSS setup with Tailwind and custom styles in the future.
+
+---
+
+## 1. Key Components & File Structure
+
+**Stylesheet files (`app/assets/stylesheets/`):**
+- `application.tailwind.css` — main Tailwind entry
+- `landing_custom.css` — custom styles (for things like .gradient-text, .glass)
+- `application.css` — manifest that pulls everything together
+
+**Tailwind build output:**
+- `app/assets/builds/tailwind.css` — the file Tailwind generates and that contains all utilities
+
+**Tailwind config location:**
+- `config/tailwind.config.js` — controls purging and safelisting of classes
+
+**Layouts:**
+- All layouts use `<%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>` to load the styles
+
+---
+
+## 2. File Contents & Manifest
+
+**application.tailwind.css:**
+```css
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+```
+
+**landing_custom.css:**
+```css
+/* Custom styles for landing page gradients, glass, and animation */
+.gradient-text {
+  background: linear-gradient(90deg,#6366f1 20%,#22d3ee 50%,#eab308 90%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
+}
+.fade-in {
+  animation: fadeIn 2s cubic-bezier(.39,.575,.565,1.000) both;
+}
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+.glass {
+  background: rgba(255,255,255,0.09);
+  box-shadow: 0 8px 32px 0 rgba(31,38,135,.1);
+  backdrop-filter: blur(8px);
+  border-radius: 1.5rem;
+  border: 1px solid rgba(255,255,255,0.18);
+}
+```
+
+**application.css:**
+```css
+/*
+ *= require application.tailwind
+ *= require landing_custom
+ *= require_self
+*/
+```
+
+**(Optional) documents_datatable.css:** For DataTable-specific overrides.
+
+---
+
+## 3. Tailwind Config (`config/tailwind.config.js`)
+```js
+module.exports = {
+  content: [
+    "./app/views/**/*.html.erb",
+    "./app/helpers/**/*.rb",
+    "./app/javascript/**/*.js",
+    "./app/assets/**/*.css",
+  ],
+  safelist: [
+    /dataTable/,               // keeps any class with 'dataTable' in it
+    /datatable/,               // keeps 'datatable-*' classes too
+    'dt-row', 'dt-header',     // explicitly named classes
+    'dt-button', 'dt-search',
+  ],
+  theme: { extend: {} },
+  plugins: [],
+}
+```
+
+---
+
+## 4. Layout Usage
+In all layout files (application.html.erb, home_landing.html.erb, admin.html.erb), use:
+```erb
+<%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+```
+
+---
+
+## 5. Workflow To Rebuild CSS
+Whenever you change Tailwind config, add new classes, or alter custom CSS:
+
+1. **Build Tailwind output:**
+   ```sh
+   rails tailwindcss:build
+   # or, in CI/production, run:
+   bundle exec rake assets:precompile
+   ```
+2. **Restart your Rails server** (optional, but helps in dev)
+3. **Reload your page**
+
+---
+
+## 6. Troubleshooting
+- If you see missing CSS: make sure all files exist as listed and run the build/precompile!
+- For custom classes, keep them in separate CSS (like landing_custom.css) for clarity and easy inclusion.
+- Make sure you **never reference `application.tailwind.css` directly** in your layouts—use `:app` or the build output.
+
+---
+
+That’s it! You now have a fully working, replicable setup for Tailwind CSS and custom classes in a modern Rails app.

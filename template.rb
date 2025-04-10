@@ -41,10 +41,13 @@ FileUtils.cp("#{source_path}/nomina-rules.txt", "nomina-rules.txt")
 gem "image_processing", ">= 1.2"
 gem 'ajax-datatables-rails'
 gem 'tailwindcss-rails'
+gem "tailwindcss-ruby", "3.4.13"
 gem 'faker'
 after_bundle do
-  system("npm install datatables.net-dt")
+  #system("npm install datatables.net-dt")
   rails_command 'tailwindcss:install'
+  run "./bin/importmap pin jquery"
+  run "./bin/importmap pin datatables.net"
   generate "authentication"
   # Add custom layout to authentication controllers
   gsub_file "app/controllers/passwords_controller.rb",
