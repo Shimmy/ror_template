@@ -3,7 +3,6 @@ require "fileutils"
 source_path = File.expand_path(File.dirname(__FILE__))
 
 # Copy scaffold templates
-FileUtils.cp_r "#{source_path}/.", "."
 
 # Add gems
 gem "image_processing", ">= 1.2"
@@ -27,6 +26,7 @@ after_bundle do
             "class SessionsController < ApplicationController\n  layout \"auth/empty\""
   
   rails_command "active_storage:install"
+  FileUtils.cp_r "#{source_path}/.", "."
   generate "better_scaffold document name:string description:text user:references --force --datatables"
   rails_command "db:migrate"
 
