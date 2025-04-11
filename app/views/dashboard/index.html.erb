@@ -1,1 +1,109 @@
-dashboard
+<div class="w-full grid grid-cols-1 md:grid-cols-4 gap-6">
+  <!-- Stat Cards -->
+  <div class="col-span-1 bg-white shadow rounded-lg p-6 flex flex-col items-center justify-center">
+    <div class="text-3xl font-bold text-blue-600">342</div>
+    <div class="text-gray-600 mt-2">Users</div>
+  </div>
+
+  <div class="col-span-1 bg-white shadow rounded-lg p-6 flex flex-col items-center justify-center">
+    <div class="text-3xl font-bold text-green-600">581</div>
+    <div class="text-gray-600 mt-2">Documents</div>
+  </div>
+
+  <div class="col-span-1 bg-white shadow rounded-lg p-6 flex flex-col items-center justify-center">
+    <div class="text-3xl font-bold text-fuchsia-600">19</div>
+    <div class="text-gray-600 mt-2">Projects</div>
+  </div>
+
+  <div class="col-span-1 bg-white shadow rounded-lg p-6 flex flex-col items-center justify-center">
+    <div class="text-3xl font-bold text-yellow-400">6</div>
+    <div class="text-gray-600 mt-2">Admins</div>
+  </div>
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
+  <!-- Recent Activity Panel -->
+  <div class="bg-white shadow rounded-lg p-6">
+    <div class="flex justify-between items-center mb-4">
+      <h2 class="text-lg font-bold text-gray-700">Recent Activity</h2>
+      <span class="text-xs text-gray-400">Today</span>
+    </div>
+    <ul>
+      <li class="mb-3 flex items-center">
+        <div class="h-3 w-3 rounded-full bg-blue-600 mr-3"></div>
+        User <span class="font-semibold mx-1">alex@email.com</span> created a new document.
+      </li>
+      <li class="mb-3 flex items-center">
+        <div class="h-3 w-3 rounded-full bg-green-600 mr-3"></div>
+        Project <span class="font-semibold mx-1">Alpha</span> was updated.
+      </li>
+      <li class="mb-3 flex items-center">
+        <div class="h-3 w-3 rounded-full bg-fuchsia-600 mr-3"></div>
+        User <span class="font-semibold mx-1">jane@email.com</span> signed up.
+      </li>
+      <li class="mb-3 flex items-center">
+        <div class="h-3 w-3 rounded-full bg-yellow-400 mr-3"></div>
+        Admin privileges granted to <span class="font-semibold mx-1">mike@email.com</span>.
+      </li>
+    </ul>
+  </div>
+
+  <!-- Quick Stats Panel -->
+  <div class="bg-white shadow rounded-lg p-6">
+    <div class="flex justify-between items-center mb-4">
+      <h2 class="text-lg font-bold text-gray-700">Quick Stats</h2>
+      <span class="text-xs text-gray-400">Mocked</span>
+    </div>
+    <div class="flex flex-wrap gap-4">
+      <div class="flex flex-col items-center mr-6">
+        <div class="text-2xl font-bold text-indigo-600">62%</div>
+        <div class="text-gray-500">Growth</div>
+      </div>
+      <div class="flex flex-col items-center mr-6">
+        <div class="text-2xl font-bold text-red-400">13</div>
+        <div class="text-gray-500">Issues</div>
+      </div>
+      <div class="flex flex-col items-center">
+        <div class="text-2xl font-bold text-green-500">99.9%</div>
+        <div class="text-gray-500">Uptime</div>
+      </div>   
+    </div>
+  </div>
+</div>
+
+<!-- Table Section -->
+<div class="mt-10 bg-white shadow rounded-lg p-6">
+  <h2 class="text-lg font-bold text-gray-700 mb-4">Sample Table</h2>
+  <div class="overflow-x-auto">
+    <table class="min-w-full divide-y divide-gray-200">
+      <thead class="bg-gray-50">
+        <tr>
+          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
+          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Role</th>
+        </tr>
+      </thead>
+      <tbody class="bg-white divide-y divide-gray-200">
+        <tr>
+          <td class="px-6 py-4 whitespace-nowrap">Alex Lee</td>
+          <td class="px-6 py-4 whitespace-nowrap">alex@email.com</td>
+          <td class="px-6 py-4 whitespace-nowrap"><span class="inline-block px-2 py-1 bg-green-100 text-green-900 rounded">Active</span></td>
+          <td class="px-6 py-4 whitespace-nowrap">User</td>
+        </tr>
+        <tr>
+          <td class="px-6 py-4 whitespace-nowrap">Jane Doe</td>
+          <td class="px-6 py-4 whitespace-nowrap">jane@email.com</td>
+          <td class="px-6 py-4 whitespace-nowrap"><span class="inline-block px-2 py-1 bg-yellow-100 text-yellow-700 rounded">Pending</span></td>
+          <td class="px-6 py-4 whitespace-nowrap">Editor</td>
+        </tr>
+        <tr>
+          <td class="px-6 py-4 whitespace-nowrap">Mike Stone</td>
+          <td class="px-6 py-4 whitespace-nowrap">mike@email.com</td>
+          <td class="px-6 py-4 whitespace-nowrap"><span class="inline-block px-2 py-1 bg-blue-100 text-blue-800 rounded">Invited</span></td>
+          <td class="px-6 py-4 whitespace-nowrap">Admin</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
