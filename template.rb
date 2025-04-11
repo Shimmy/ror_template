@@ -3,39 +3,7 @@ require "fileutils"
 source_path = File.expand_path(File.dirname(__FILE__))
 
 # Copy scaffold templates
-FileUtils.mkdir_p("lib/templates/erb/scaffold")
-FileUtils.cp_r "#{source_path}/lib/templates/erb/scaffold/.", "lib/templates/erb/scaffold"
-
-FileUtils.mkdir_p("app/models/concerns")
-FileUtils.cp_r "#{source_path}/app/models/concerns/.", "app/models/concerns"
-
-FileUtils.mkdir_p("app/helpers")
-FileUtils.cp_r "#{source_path}/app/helpers/.", "app/helpers"
-
-# Copy layouts
-#FileUtils.mkdir_p("app/views/layouts")
-#FileUtils.cp_r "#{source_path}/app/views/layouts/.", "app/views/layouts"
-FileUtils.mkdir_p("app/")
-FileUtils.cp_r "#{source_path}/app/.", "app/"
-
-# Custom generator
-FileUtils.mkdir_p("lib/generators/scaffold_with_associations")
-FileUtils.cp_r "#{source_path}/lib/generators/scaffold_with_associations/.", "lib/generators/scaffold_with_associations"
-
-FileUtils.mkdir_p("lib/generators/better_scaffold")
-FileUtils.cp_r "#{source_path}/lib/generators/better_scaffold/.", "lib/generators/better_scaffold"
-
-# Datatables changes
-FileUtils.mkdir_p("lib/templates/rails/scaffold_controller/")
-FileUtils.cp_r "#{source_path}/lib/templates/rails/scaffold_controller/.", "lib/templates/rails/scaffold_controller/"
-FileUtils.mkdir_p("lib/templates/rails/scaffold/")
-FileUtils.cp "#{source_path}/lib/templates/rails/scaffold/datatable.rb.tt", "lib/templates/rails/scaffold/datatable.rb.tt"
-FileUtils.cp "#{source_path}/lib/templates/rails/scaffold/datatable.js.tt", "lib/templates/rails/scaffold/datatable.js.tt"
-FileUtils.cp "#{source_path}/lib/templates/rails/scaffold/datatable.css.tt", "lib/templates/rails/scaffold/datatable.css.tt"
-
-# Nomina rules
-FileUtils.cp("#{source_path}/nomina-rules.txt", "nomina-rules.txt")
-
+FileUtils.cp_r "#{source_path}/.", "."
 
 # Add gems
 gem "image_processing", ">= 1.2"
@@ -69,6 +37,7 @@ after_bundle do
   route "root 'home#index', as: :home"
   route "get 'dashboard' => 'dashboard#index', as: :dashboard"
   rails_command "assets:precompile"
+  system("rake db:faker:model[Document,50]")
 end
 gsub_file "app/controllers/application_controller.rb",
           "class ApplicationController < ActionController::Base",

@@ -1,6 +1,6 @@
 class HomeController < ApplicationController
 	allow_unauthenticated_access
-	layout "application"
+	layout "landing"
 	def index
 	end
 end
