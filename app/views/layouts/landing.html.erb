@@ -24,8 +24,17 @@
   </head>
 
   <body>
-    
+    <!-- Navigation bar fixed, no white bar background -->
+    <nav class="fixed top-0 w-full z-50 flex justify-end items-center px-8 py-4 gap-4 bg-transparent">
+      <% if authenticated? && Current.user %>
+        <a href="<%= dashboard_path %>" class="px-5 py-2 rounded-full font-semibold text-white bg-gradient-to-r from-indigo-700 via-cyan-500 to-indigo-400 hover:from-cyan-400 hover:to-indigo-700 transition shadow-md border border-white/20">Go to Dashboard</a>
+      <% else %>
+        <a href="/session/new" class="px-4 py-2 rounded-full font-semibold text-cyan-100 bg-cyan-800/90 border border-cyan-400/60 shadow hover:bg-cyan-600/90 hover:text-white transition">Login</a>
+        <a href="#signup" class="px-4 py-2 rounded-full font-semibold text-white bg-gradient-to-r from-indigo-600 via-cyan-500 to-indigo-400 shadow hover:from-cyan-400 hover:to-indigo-600 transition border border-white/20">Sign Up</a>
+      <% end %>
+    </nav>
+    <div>
       <%= yield %>
-    
+    </div>
   </body>
 </html>

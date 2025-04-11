@@ -1,0 +1,27 @@
+import { Controller } from "@hotwired/stimulus"
+import $ from 'jquery'
+import 'datatables.net'
+
+export default class extends Controller {
+connect() {
+  if (!$.fn.DataTable.isDataTable(this.element)) {
+    $(this.element).DataTable({
+      processing: true,
+      serverSide: true,
+      ajax: {
+        url: this.element.dataset.source
+      },
+      pagingType: "full_numbers",
+      columns: [        
+        
+          { data: "name"},
+        
+          { data: "description"},
+        
+          { data: "user"},
+        
+      ]
+    });
+  }
+}
+}

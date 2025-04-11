@@ -3,7 +3,6 @@ require "fileutils"
 source_path = File.expand_path(File.dirname(__FILE__))
 
 # Copy scaffold templates
-FileUtils.cp_r "#{source_path}/.", "."
 
 # Add gems
 gem "image_processing", ">= 1.2"
@@ -27,6 +26,7 @@ after_bundle do
             "class SessionsController < ApplicationController\n  layout \"auth/empty\""
   
   rails_command "active_storage:install"
+  FileUtils.cp_r "#{source_path}/.", "."
   generate "better_scaffold document name:string description:text user:references --force --datatables"
   rails_command "db:migrate"
 
@@ -36,6 +36,8 @@ after_bundle do
   # create a home route
   route "root 'home#index', as: :home"
   route "get 'dashboard' => 'dashboard#index', as: :dashboard"
+  route "resource :session"
+  route "resources :passwords, param: :token"
   rails_command "assets:precompile"
   system("rake db:faker:model[Document,50]")
 end
