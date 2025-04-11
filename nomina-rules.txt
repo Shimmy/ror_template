@@ -31,7 +31,6 @@ Stylesheets (Tailwind)
 * All views have tailwind css loaded
 * Always use tailwind, don't create inline css.
 * Try to keep the same layout and style as existing views.
-* Always run rails assets:precompile when adding any classes on a html page
 
 Conventions & Principles
 * Stick to Rails conventions unless user instructs otherwise.
@@ -50,7 +49,6 @@ Common Commands
 * rails db:migrate
 * rails db:rollback
 * rails g stimulus
-* rails assets:precompile
 
 Troubleshooting
 * When user says something went wrong please check the rails development log
