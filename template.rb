@@ -66,8 +66,9 @@ after_bundle do
   rails_command %(runner "User.create!(email_address: 'test@test.com', password: 'test123')")
 
   # create a home route
-  generate "controller home"
-  route "root 'home#index'"
+  route "root 'home#index', as: :home"
+  route "get 'dashboard' => 'dashboard#index', as: :dashboard"
+  rails_command "assets:precompile"
 end
 gsub_file "app/controllers/application_controller.rb",
           "class ApplicationController < ActionController::Base",
