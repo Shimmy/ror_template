@@ -64,5 +64,5 @@ end
 gem "image_processing", ">= 1.2"
 gem "ajax-datatables-rails"
 gem "tailwindcss-rails"
-gem "tailwindcss-ruby", "3.4.13"
+gem "tailwindcss-ruby", "4.1.3"
 gem "faker"
